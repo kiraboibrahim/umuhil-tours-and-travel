@@ -11,10 +11,10 @@ const siteConfig = {
         businessHours: "Mon-Fri: 8AM-6PM, Sat: 9AM-4PM"
     },
     socials: {
-        facebook: "https://facebook.com/triptonicsafaris",
-        instagram: "https://instagram.com/triptonicsafaris",
-        twitter: "https://twitter.com/triptonicsafaris",
-        linkedin: "https://linkedin.com/company/triptonicsafaris"
+        facebook: "https://facebook.com/ngirisirtours",
+        instagram: "https://instagram.com/ngirisirtours",
+        twitter: "https://twitter.com/ngirisirtours",
+        linkedin: "https://linkedin.com/company/ngirisirtours"
     },
     seo: {
         title: "Ngirisi Tours Uganda — Uganda Safaris & Adventure Travel",

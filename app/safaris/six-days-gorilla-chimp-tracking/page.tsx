@@ -1,5 +1,6 @@
 "use client";
 import { useState } from 'react';
+import siteConfig from '../../siteConfig';
 
 const SixDaysGorillaChimp = () => {
     const [activeDay, setActiveDay] = useState(1);
@@ -10,7 +11,7 @@ const SixDaysGorillaChimp = () => {
             title: "Arrival in Entebbe",
             location: "Entebbe International Airport",
             accommodation: "Protea Hotel Entebbe",
-            description: "Welcome to Uganda, the Pearl of Africa! Upon arrival at Entebbe International Airport, you'll be warmly received by your TripTonic Safaris representative. Transfer to your lakeside hotel situated on the shores of Lake Victoria. Depending on your arrival time, enjoy a relaxed evening, optional bird watching around the botanical gardens, or explore the charming town of Entebbe. Dinner and overnight at your hotel as you prepare for the adventures ahead.",
+            description: `Welcome to Uganda, the Pearl of Africa! Upon arrival at Entebbe International Airport, you'll be warmly received by your ${siteConfig.company.name} representative. Transfer to your lakeside hotel situated on the shores of Lake Victoria. Depending on your arrival time, enjoy a relaxed evening, optional bird watching around the botanical gardens, or explore the charming town of Entebbe. Dinner and overnight at your hotel as you prepare for the adventures ahead.`,
             highlights: ["Airport meet & greet", "Lake Victoria views", "Optional botanical gardens visit", "Welcome dinner"]
         },
         {
@@ -88,7 +89,7 @@ const SixDaysGorillaChimp = () => {
                 <div className="absolute inset-0 opacity-20" style={{ backgroundImage: 'url("data:image/svg+xml,%3Csvg width="60" height="60" viewBox="0 0 60 60" xmlns="http://www.w3.org/2000/svg"%3E%3Cg fill="none" fill-rule="evenodd"%3E%3Cg fill="%239C92AC" fill-opacity="0.15"%3E%3Cpath d="M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z"/%3E%3C/g%3E%3C/g%3E%3C/svg%3E")' }}></div>
                 <div className="absolute inset-0 flex flex-col justify-center items-center text-white text-center px-4">
                     <div className="bg-[#7AB730] text-white text-xs font-bold px-4 py-1 rounded-full mb-4">MOST POPULAR</div>
-                    <p className="text-[#7AB730] font-semibold tracking-widest uppercase mb-2">TripTonic Safaris</p>
+                    <p className="text-[#7AB730] font-semibold tracking-widest uppercase mb-2">{siteConfig.company.name}</p>
                     <h1 className="text-4xl md:text-5xl font-bold mb-4">6 Day Gorilla & Chimp Tracking Safari</h1>
                     <p className="text-gray-300 max-w-2xl mb-6">The ultimate primate adventure combining chimpanzee and mountain gorilla tracking</p>
                     <div className="flex flex-wrap justify-center gap-2 text-xs">

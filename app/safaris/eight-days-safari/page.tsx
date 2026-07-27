@@ -1,5 +1,6 @@
 "use client";
 import { useState } from 'react';
+import siteConfig from '../../siteConfig';
 
 const EightDaysSafari = () => {
     const [activeDay, setActiveDay] = useState(1);
@@ -10,7 +11,7 @@ const EightDaysSafari = () => {
             title: "Arrival in Entebbe",
             location: "Entebbe International Airport",
             accommodation: "Lake Victoria Serena Golf Resort",
-            description: "Welcome to Uganda! Upon arrival at Entebbe International Airport, your TripTonic Safaris guide will be waiting to greet you. Transfer to your luxury lakeside resort on the shores of Lake Victoria, Africa's largest lake. Depending on your arrival time, relax by the pool, enjoy the beautiful gardens, or take a sunset boat cruise on the lake. Join us for a welcome dinner and briefing about your upcoming adventure through the Pearl of Africa.",
+            description: `Welcome to Uganda! Upon arrival at Entebbe International Airport, your ${siteConfig.company.name} guide will be waiting to greet you. Transfer to your luxury lakeside resort on the shores of Lake Victoria, Africa's largest lake. Depending on your arrival time, relax by the pool, enjoy the beautiful gardens, or take a sunset boat cruise on the lake. Join us for a welcome dinner and briefing about your upcoming adventure through the Pearl of Africa.`,
             highlights: ["VIP airport meet & greet", "Lake Victoria resort", "Optional sunset boat cruise", "Welcome dinner & briefing"]
         },
         {
@@ -66,7 +67,7 @@ const EightDaysSafari = () => {
             title: "Bush Walk & Departure",
             location: "Lake Mburo → Equator → Entebbe",
             accommodation: "End of Safari",
-            description: "Start your final day with an early morning guided bush walk – a unique chance to experience the African bush on foot alongside zebras, impalas, and elands. Return for breakfast, then check out and begin your journey to Entebbe. Stop at the Uganda Equator for the famous water experiment, photos, and final souvenir shopping. Enjoy lunch en-route before arriving at Entebbe Airport in the afternoon for your departure flight. Farewell from TripTonic Safaris – until next time!",
+            description: `Start your final day with an early morning guided bush walk – a unique chance to experience the African bush on foot alongside zebras, impalas, and elands. Return for breakfast, then check out and begin your journey to Entebbe. Stop at the Uganda Equator for the famous water experiment, photos, and final souvenir shopping. Enjoy lunch en-route before arriving at Entebbe Airport in the afternoon for your departure flight. Farewell from ${siteConfig.company.name} – until next time!`,
             highlights: ["Guided bush walk", "Walking with wildlife", "Equator experience", "Airport transfer"]
         }
     ];
@@ -107,7 +108,7 @@ const EightDaysSafari = () => {
                 <div className="absolute inset-0 opacity-20" style={{ backgroundImage: 'url("data:image/svg+xml,%3Csvg width="60" height="60" viewBox="0 0 60 60" xmlns="http://www.w3.org/2000/svg"%3E%3Cg fill="none" fill-rule="evenodd"%3E%3Cg fill="%239C92AC" fill-opacity="0.15"%3E%3Cpath d="M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z"/%3E%3C/g%3E%3C/g%3E%3C/svg%3E")' }}></div>
                 <div className="absolute inset-0 flex flex-col justify-center items-center text-white text-center px-4">
                     <div className="bg-[#7AB730] text-white text-xs font-bold px-4 py-1 rounded-full mb-4">BEST SELLER</div>
-                    <p className="text-[#7AB730] font-semibold tracking-widest uppercase mb-2">TripTonic Safaris</p>
+                    <p className="text-[#7AB730] font-semibold tracking-widest uppercase mb-2">{siteConfig.company.name}</p>
                     <h1 className="text-4xl md:text-5xl font-bold mb-4">8 Day Ultimate Uganda Safari</h1>
                     <p className="text-gray-300 max-w-2xl mb-6">The complete Uganda experience – primates, wildlife, and culture</p>
                     <div className="flex flex-wrap justify-center gap-2 text-xs">

@@ -86,7 +86,7 @@ const AboutUs = () => {
                     <div className="grid md:grid-cols-2 gap-8">
                         <div>
                             <p className="text-gray-600 leading-relaxed mb-4">
-                                TripTonic Safaris was founded in 2014 by passionate Ugandan travel enthusiasts with a bold vision: to share the breathtaking beauty of East Africa with the world. Over a decade later, we have grown into one of Uganda&lsquo;s trusted tour operators, specializing in gorilla tracking, wildlife safaris, and authentic cultural experiences.
+                                {siteConfig.company.name} was founded in 2014 by passionate Ugandan travel enthusiasts with a bold vision: to share the breathtaking beauty of East Africa with the world. Over a decade later, we have grown into one of Uganda&lsquo;s trusted tour operators, specializing in gorilla tracking, wildlife safaris, and authentic cultural experiences.
                             </p>
                             <p className="text-gray-600 leading-relaxed">
                                 Our name reflects our philosophy – we believe travel should be invigorating, energizing, and transformative. Like a tonic for the soul, our safaris are designed to refresh your spirit, broaden your horizons, and create memories that last a lifetime.

@@ -1,5 +1,6 @@
 "use client";
 import { useState } from 'react';
+import siteConfig from '../../siteConfig';
 
 const ThreeDaysGorilla = () => {
     const [activeDay, setActiveDay] = useState(1);
@@ -10,7 +11,7 @@ const ThreeDaysGorilla = () => {
             title: "Arrival in Entebbe & Transfer to Bwindi",
             location: "Entebbe → Bwindi Impenetrable Forest",
             accommodation: "Buhoma Haven Lodge",
-            description: "Welcome to Uganda, the Pearl of Africa! Upon arrival at Entebbe International Airport, you'll be greeted by your TripTonic Safaris guide. After a brief welcome, begin your scenic drive to Bwindi Impenetrable Forest National Park. The journey takes approximately 8-9 hours, passing through rolling hills, tea plantations, and local villages. Enjoy a packed lunch en-route with stunning views of the Ugandan countryside. Arrive at your lodge in time for dinner and overnight rest as you prepare for tomorrow's adventure.",
+            description: `Welcome to Uganda, the Pearl of Africa! Upon arrival at Entebbe International Airport, you'll be greeted by your ${siteConfig.company.name} guide. After a brief welcome, begin your scenic drive to Bwindi Impenetrable Forest National Park. The journey takes approximately 8-9 hours, passing through rolling hills, tea plantations, and local villages. Enjoy a packed lunch en-route with stunning views of the Ugandan countryside. Arrive at your lodge in time for dinner and overnight rest as you prepare for tomorrow's adventure.`,
             highlights: ["Airport pickup", "Scenic countryside drive", "Tea plantation views", "Traditional village sightings"]
         },
         {
@@ -62,7 +63,7 @@ const ThreeDaysGorilla = () => {
                 <div className="absolute inset-0 opacity-20" style={{ backgroundImage: 'url("data:image/svg+xml,%3Csvg width="60" height="60" viewBox="0 0 60 60" xmlns="http://www.w3.org/2000/svg"%3E%3Cg fill="none" fill-rule="evenodd"%3E%3Cg fill="%239C92AC" fill-opacity="0.15"%3E%3Cpath d="M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z"/%3E%3C/g%3E%3C/g%3E%3C/svg%3E")' }}></div>
                 <div className="absolute inset-0 flex flex-col justify-center items-center text-white text-center px-4">
                     <div className="bg-[#7AB730] text-white text-xs font-bold px-4 py-1 rounded-full mb-4">EXPRESS SAFARI</div>
-                    <p className="text-[#7AB730] font-semibold tracking-widest uppercase mb-2">TripTonic Safaris</p>
+                    <p className="text-[#7AB730] font-semibold tracking-widest uppercase mb-2">{siteConfig.company.name}</p>
                     <h1 className="text-4xl md:text-5xl font-bold mb-4">3 Day Gorilla Tracking Safari</h1>
                     <p className="text-gray-300 max-w-2xl mb-6">A quick but unforgettable encounter with mountain gorillas</p>
                     <div className="flex flex-wrap justify-center gap-2 text-xs">
