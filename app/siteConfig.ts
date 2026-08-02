@@ -1,26 +1,21 @@
 const siteConfig = {
     company: {
-        name: "Ngirisi Tours",
-        tagline: "Your gateway to wonderful adventures",
+        name: "Umuhil",
+        tagline: "Custom Holiday & Wildlife Safaris",
         logo: "/img/logo.png",
     },
     contacts: {
-        phoneNumber: "+256 779 511 810 | +256 783 938 958",
-        email: "ngirisitoursuganda@gmail.com",
-        location: "Bugolobi, Nakawa Division - Kampala",
-        businessHours: "Mon-Fri: 8AM-6PM, Sat: 9AM-4PM"
+        phoneNumber: "WhatsApp: 0780753938 | Call: 0743369906",
+        email: "Umuhillimited@gmail.com",
+        location: "Plot 8, Burton Street, Apponye Mall, Kampala, Uganda",
+        businessHours: "Mon - Fri: 08:00 am to 5:30 pm, Sat: 9:00 am - 3:00 am"
     },
-    socials: {
-        facebook: "https://facebook.com/ngirisirtours",
-        instagram: "https://instagram.com/ngirisirtours",
-        twitter: "https://twitter.com/ngirisirtours",
-        linkedin: "https://linkedin.com/company/ngirisirtours"
-    },
+    socials: {},
     seo: {
-        title: "Ngirisi Tours Uganda — Uganda Safaris & Adventure Travel",
-        description: "Ngirisi Tours offers expert-led Uganda safaris, including gorilla trekking, wildlife safaris, and cultural tours. Custom itineraries, experienced guides, and hassle-free booking for an unforgettable East African adventure.",
-        keywords: "Uganda tours, safari Uganda, gorilla trekking, wildlife safari, cultural tours, Ngirisi Tours, Uganda travel",
-        siteUrl: "https://candctours.com",
+        title: "Umuhil | Kampala, Uganda",
+        description: "Umuhil Tours & Travel organizes national park safaris, gorilla tracking tours, international flight ticketing, lodge bookings, and corporate holiday travel packages.",
+        keywords: "Umuhil Tours & Travel, Uganda safaris, gorilla tracking, wildlife safaris, flight booking, lodge reservations, Kampala travel",
+        siteUrl: "https://umuhil.com",
         image: "/img/seo/og-image.jpg"
     }
 }
