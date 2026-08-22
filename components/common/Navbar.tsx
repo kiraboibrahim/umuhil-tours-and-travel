@@ -4,7 +4,7 @@ import Image from "next/image";
 import { useState, useEffect } from "react";
 import { usePathname } from "next/navigation";
 import siteConfig from "@/app/siteConfig";
-import { X, Menu, Phone, Mail, Compass } from "lucide-react";
+import { X, Menu, Phone, Mail, Home, Info, PhoneCall } from "lucide-react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faWhatsapp } from "@fortawesome/free-brands-svg-icons";
 
@@ -14,9 +14,9 @@ const Navbar = () => {
     const pathname = usePathname();
 
     const navLinks = [
-        { label: "Home", href: "/" },
-        { label: "About Us", href: "/about" },
-        { label: "Contact Us", href: "/contact" },
+        { label: "Home", href: "/", icon: Home },
+        { label: "About Us", href: "/about", icon: Info },
+        { label: "Contact Us", href: "/contact", icon: PhoneCall },
     ];
 
     useEffect(() => {
@@ -165,6 +165,7 @@ const Navbar = () => {
                     <p className="text-[10px] font-bold uppercase tracking-widest text-gray-400 mb-3 ml-2">Navigation</p>
                     {navLinks.map((item) => {
                         const isActive = pathname === item.href;
+                        const Icon = item.icon;
                         return (
                             <Link
                                 key={item.label}
@@ -176,7 +177,7 @@ const Navbar = () => {
                                         : "text-[#33052A] hover:bg-gray-50"
                                 }`}
                             >
-                                <Compass className={`w-4 h-4 ${isActive ? "text-[#E619B0]" : "text-gray-400"}`} />
+                                <Icon className={`w-4 h-4 ${isActive ? "text-[#E619B0]" : "text-gray-400"}`} />
                                 <span>{item.label}</span>
                             </Link>
                         );
