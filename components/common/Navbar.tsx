@@ -1,173 +1,141 @@
 "use client";
 import Link from "next/link";
-import { useState } from "react";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faChevronDown } from "@fortawesome/free-solid-svg-icons";
+import Image from "next/image";
+import { useState, useEffect } from "react";
+import { usePathname } from "next/navigation";
 import siteConfig from "@/app/siteConfig";
 
 const Navbar = () => {
     const [mobileOpen, setMobileOpen] = useState(false);
-    const [safarisOpen, setSafarisOpen] = useState(false);
-    const [servicesOpen, setServicesOpen] = useState(false);
+    const [scrolled, setScrolled] = useState(false);
+    const pathname = usePathname();
 
     const navLinks = [
         { label: "Home", href: "/" },
         { label: "About Us", href: "/about" },
-        { label: "Community", href: "/community" },
-        {
-            label: "Safaris",
-            href: "#safaris",
-            dropdown: [
-                { label: "Three Days Gorilla Tracking", href: "/safaris/three-days-gorilla-tracking" },
-                { label: "Six Days of Gorilla Tracking and Chimp Tracking", href: "/safaris/six-days-gorilla-chimp-tracking" },
-                { label: "Eight Days Safari", href: "/safaris/eight-days-safari" },
-            ],
-        },
-        {
-            label: "Other Services",
-            href: "#services",
-            dropdown: [
-                { label: "Car Rentals", href: "/other-services/car-rental" },
-                { label: "Honeymoon Package", href: "/other-services/honey-moon" },
-                { label: "Air Ticketing", href: "/other-services/air-ticketing" },
-                { label: "Consultancy", href: "/other-services/consultancy" },
-            ],
-        },
         { label: "Contact Us", href: "/contact" },
-        { label: "Pay Here", href: "/pay" },
     ];
 
-    const handleDropdownToggle = (dropdown: string) => {
-        if (dropdown === "safaris") {
-            setSafarisOpen(!safarisOpen);
-            setServicesOpen(false);
-        } else if (dropdown === "services") {
-            setServicesOpen(!servicesOpen);
-            setSafarisOpen(false);
-        }
-    };
-
-    const openDropdown = (dropdown: string) => {
-        if (dropdown === "safaris") {
-            setSafarisOpen(true);
-            setServicesOpen(false);
-        } else if (dropdown === "services") {
-            setServicesOpen(true);
-            setSafarisOpen(false);
-        }
-    };
-
-    const closeDropdown = (dropdown: string) => {
-        if (dropdown === "safaris") {
-            setSafarisOpen(false);
-        } else if (dropdown === "services") {
-            setServicesOpen(false);
-        }
-    };
+    useEffect(() => {
+        const handleScroll = () => {
+            if (window.scrollY > 20) {
+                setScrolled(true);
+            } else {
+                setScrolled(false);
+            }
+        };
+        window.addEventListener("scroll", handleScroll);
+        return () => window.removeEventListener("scroll", handleScroll);
+    }, []);
 
     const closeMobileMenu = () => {
         setMobileOpen(false);
-        setSafarisOpen(false);
-        setServicesOpen(false);
     };
 
     return (
-        <div className="w-full relative p-0 lg:before:absolute lg:before:content-[''] lg:before:w-full lg:before:h-1/2 lg:before:top-[50%] lg:before:left-0 lg:before:bg-gray-200 mt-4">
-            <div className="lg:max-w-[960px] max-w-full mx-auto relative p-0 lg:px-3" style={{ zIndex: 9 }}>
-                <nav className="relative flex flex-wrap items-center justify-between bg-white shadow-[0_0.5rem_1rem_rgba(0,0,0,0.15)] py-2 lg:py-0 px-12 lg:px-4">
-                    <Link href="/" className="my-auto py-[0.3125rem] mr-4 leading-[inherit] whitespace-nowrap hover:no-underline">
-                        <h1 className="m-0 font-bold tracking-wide text-xl leading-[1.2] bg-gradient-to-r from-[#7AB730] to-[#527a20] bg-clip-text text-transparent">
-                            {siteConfig.company.name}
-                        </h1>
+        <header className={`sticky top-0 z-50 transition-all duration-300 ${scrolled ? "bg-white/95 backdrop-blur-md shadow-lg py-2" : "bg-white shadow-sm py-3"}`}>
+            <div className="max-w-[1140px] mx-auto px-4">
+                <nav className="flex items-center justify-between">
+                    {/* Brand Logo & Name */}
+                    <Link href="/" className="flex items-center space-x-3 group hover:no-underline">
+                        <div className="relative w-10 h-10 overflow-hidden rounded-lg bg-gray-50 flex items-center justify-center p-1 border border-gray-100 group-hover:scale-105 transition-transform">
+                            <Image 
+                                src="/img/logo.png" 
+                                alt={siteConfig.company.name} 
+                                width={40} 
+                                height={40}
+                                className="object-contain w-full h-full"
+                            />
+                        </div>
+                        <div className="flex flex-col">
+                            <span className="font-extrabold text-xl tracking-tight leading-none bg-gradient-to-r from-[#E619B0] via-[#C11292] to-[#8A0F6B] bg-clip-text text-transparent">
+                                {siteConfig.company.name}
+                            </span>
+                            <span className="text-[10px] uppercase font-bold tracking-widest text-[#4D0838]/70 leading-tight">
+                                Tours & Travel
+                            </span>
+                        </div>
                     </Link>
-                    {/* Mobile Toggler */}
+
+                    {/* Desktop Navigation Links */}
+                    <div className="hidden lg:flex items-center space-x-8">
+                        {navLinks.map((item) => {
+                            const isActive = pathname === item.href;
+                            return (
+                                <Link
+                                    key={item.label}
+                                    href={item.href}
+                                    className={`relative font-semibold text-sm transition-colors duration-200 py-1 hover:text-[#E619B0] hover:no-underline ${
+                                        isActive ? "text-[#E619B0]" : "text-gray-700"
+                                    }`}
+                                >
+                                    {item.label}
+                                    {isActive && (
+                                        <span className="absolute bottom-0 left-0 w-full h-[2.5px] bg-[#E619B0] rounded-full" />
+                                    )}
+                                </Link>
+                            );
+                        })}
+                    </div>
+
+                    {/* Header Action CTA Button */}
+                    <div className="hidden lg:flex items-center space-x-4">
+                        <Link
+                            href="/contact"
+                            className="bg-gradient-to-r from-[#E619B0] to-[#8A0F6B] hover:from-[#C11292] hover:to-[#6B0A52] text-white font-semibold text-sm px-5 py-2.5 rounded-full shadow-md hover:shadow-lg transition-all duration-200 hover:no-underline flex items-center space-x-2"
+                        >
+                            <span>Book A Safari</span>
+                        </Link>
+                    </div>
+
+                    {/* Mobile Menu Toggle Button */}
                     <button
                         title="Toggle navigation"
                         type="button"
-                        className="py-[0.25rem] px-[0.75rem] text-[1.25rem] leading-[1] bg-transparent border border-transparent hover:no-underline lg:hidden inline-block w-[1.5em] h-[1.5em] align-middle bg-[length:100%_100%] bg-no-repeat bg-center"
-                        style={{
-                            backgroundImage: "url(\"data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' width='30' height='30' viewBox='0 0 30 30'%3e%3cpath stroke='rgba%280,0,0,0.5%29' stroke-linecap='round' stroke-miterlimit='10' stroke-width='2' d='M4 7h22M4 15h22M4 23h22'/%3e%3c/svg%3e\")"
-                        }}
+                        className="lg:hidden p-2 rounded-lg text-gray-700 hover:bg-gray-100 focus:outline-none"
                         onClick={() => setMobileOpen(!mobileOpen)}
                     >
-                        <span className="sr-only">Toggle navigation</span>
+                        <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            {mobileOpen ? (
+                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+                            ) : (
+                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h16" />
+                            )}
+                        </svg>
                     </button>
+                </nav>
 
-                    {/* Navigation Links */}
-                    <div
-                        className={`${mobileOpen ? "max-h-[800px] opacity-100" : "max-h-0 opacity-0 lg:max-h-full lg:opacity-100"} overflow-hidden lg:overflow-visible lg:flex lg:flex-[1_1_auto] lg:items-center basis-full flex-grow px-3 lg:px-0 justify-between transition-all duration-300 ease-in-out`}
-                        id="navbarCollapse"
-                    >
-                        <div className="flex flex-col lg:flex-row pl-0 mb-0 list-none ml-auto py-0">
-                            {navLinks.map((item, index) => (
-                                <div
+                {/* Mobile Navigation Drawer */}
+                {mobileOpen && (
+                    <div className="lg:hidden mt-3 pt-3 border-t border-gray-100 pb-4 space-y-3 animate-fadeIn">
+                        {navLinks.map((item) => {
+                            const isActive = pathname === item.href;
+                            return (
+                                <Link
                                     key={item.label}
-                                    className="relative group"
-                                    onMouseEnter={() => {
-                                        if (item.dropdown && typeof window !== 'undefined' && window.innerWidth >= 992) {
-                                            openDropdown(item.label === "Safaris" ? "safaris" : "services");
-                                        }
-                                    }}
-                                    onMouseLeave={() => {
-                                        if (item.dropdown && typeof window !== 'undefined' && window.innerWidth >= 992) {
-                                            closeDropdown(item.label === "Safaris" ? "safaris" : "services");
-                                        }
-                                    }}
+                                    href={item.href}
+                                    onClick={closeMobileMenu}
+                                    className={`block py-2 px-3 rounded-lg font-medium text-base transition-colors ${
+                                        isActive ? "bg-[#FDE9F8] text-[#E619B0]" : "text-gray-700 hover:bg-gray-50"
+                                    }`}
                                 >
-                                    {/* Main Link */}
-                                    {item.dropdown ? (
-                                        <button
-                                            onClick={() => {
-                                                if (typeof window !== 'undefined' && window.innerWidth < 992) {
-                                                    handleDropdownToggle(item.label === "Safaris" ? "safaris" : "services");
-                                                }
-                                            }}
-                                            className={`w-full text-left block py-[30px] px-[15px] text-[#212121] font-medium outline-none hover:text-[#7AB730] hover:no-underline lg:pr-2 lg:pl-2 transition-colors duration-150 ${index === 0 ? "text-[#7AB730]" : ""}`}
-                                        >
-                                            {item.label}
-                                            <FontAwesomeIcon
-                                                icon={faChevronDown}
-                                                className="ml-2 text-xs transition-transform duration-200"
-                                                style={{
-                                                    transform: (item.label === "Safaris" && safarisOpen) || (item.label === "Other Services" && servicesOpen) ? "rotate(180deg)" : "rotate(0deg)"
-                                                }}
-                                            />
-                                        </button>
-                                    ) : (
-                                        <Link
-                                            href={item.href}
-                                            onClick={closeMobileMenu}
-                                            className={`block py-[30px] px-[15px] text-[#212121] font-medium outline-none hover:text-[#7AB730] hover:no-underline lg:pr-2 lg:pl-2 transition-colors duration-150 ${index === 0 ? "text-[#7AB730]" : ""}`}
-                                        >
-                                            {item.label}
-                                        </Link>
-                                    )}
-
-                                    {/* Dropdown Menu */}
-                                    {item.dropdown && (
-                                        <div
-                                            className={`${(item.label === "Safaris" && safarisOpen) || (item.label === "Other Services" && servicesOpen) ? "block opacity-100" : "hidden opacity-0"} lg:absolute lg:top-full lg:left-0 lg:min-w-[15rem] lg:bg-white lg:shadow-[0_0.125rem_0.25rem_rgba(0,0,0,0.075)] lg:border lg:border-[rgba(0,0,0,0.15)] transition-all duration-200 ease-in-out`}
-                                            style={{ zIndex: 1000 }}
-                                        >
-                                            {item.dropdown.map((subItem) => (
-                                                <Link
-                                                    key={subItem.label}
-                                                    href={subItem.href}
-                                                    onClick={closeMobileMenu}
-                                                    className="block w-full py-[0.5rem] px-6 clear-both font-normal text-[#212529] whitespace-nowrap bg-transparent border-0 hover:bg-[#f8f9fa] hover:text-[#16181b] hover:no-underline transition-colors duration-150"
-                                                >
-                                                    {subItem.label}
-                                                </Link>
-                                            ))}
-                                        </div>
-                                    )}
-                                </div>
-                            ))}
+                                    {item.label}
+                                </Link>
+                            );
+                        })}
+                        <div className="pt-2">
+                            <Link
+                                href="/contact"
+                                onClick={closeMobileMenu}
+                                className="block w-full text-center bg-gradient-to-r from-[#E619B0] to-[#8A0F6B] text-white font-semibold py-2.5 rounded-xl shadow-md"
+                            >
+                                Book A Safari
+                            </Link>
                         </div>
                     </div>
-                </nav>
+                )}
             </div>
-        </div>
+        </header>
     );
 };
 

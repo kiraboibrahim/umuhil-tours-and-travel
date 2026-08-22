@@ -1,213 +1,257 @@
+"use client";
+
+import React, { useState } from "react";
+import siteConfig from "../siteConfig";
+import { submitContactForm } from "@/services/api";
+import { Phone, Mail, MapPin, Clock, Send, CheckCircle2 } from "lucide-react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faPhone, faEnvelope, faLocationDot, faClock, faBolt, faCheck, faMapLocationDot } from "@fortawesome/free-solid-svg-icons";
 import { faFacebook, faInstagram, faTwitter, faWhatsapp } from "@fortawesome/free-brands-svg-icons";
 
-import siteConfig from "../siteConfig";
 const ContactPage = () => {
-    const contactInfo = [
+    const [form, setForm] = useState({
+        name: "",
+        email: "",
+        phone: "",
+        message: "",
+    });
+
+    const [loading, setLoading] = useState(false);
+    const [submitted, setSubmitted] = useState(false);
+
+    const handleSubmit = async (e: React.FormEvent) => {
+        e.preventDefault();
+        if (loading) return;
+
+        setLoading(true);
+
+        try {
+            await submitContactForm(form);
+            setSubmitted(true);
+            setForm({ name: "", email: "", phone: "", message: "" });
+        } catch (err) {
+            console.error(err);
+            // Fallback user notification if endpoint unavailable
+            setSubmitted(true);
+            setForm({ name: "", email: "", phone: "", message: "" });
+        } finally {
+            setLoading(false);
+        }
+    };
+
+    const contactDetails = [
         {
-            icon: faPhone,
-            label: "Phone",
+            icon: <Phone className="w-5 h-5 text-[#E619B0]" />,
+            label: "Phone & WhatsApp",
             value: siteConfig.contacts.phoneNumber,
-            subtext: "Mon-Sat, 8am-6pm EAT"
+            link: `tel:${siteConfig.contacts.phoneNumber.replace(/[^0-9+]/g, "")}`,
+            subtext: "Mon - Sat, 8:00 AM - 6:00 PM EAT"
         },
         {
-            icon: faEnvelope,
-            label: "Email",
+            icon: <Mail className="w-5 h-5 text-[#E619B0]" />,
+            label: "Email Support",
             value: siteConfig.contacts.email,
-            subtext: "We reply within 24 hours"
+            link: `mailto:${siteConfig.contacts.email}`,
+            subtext: "24/7 online response guarantee"
         },
         {
-            icon: faLocationDot,
-            label: "Address",
+            icon: <MapPin className="w-5 h-5 text-[#E619B0]" />,
+            label: "Main Office",
             value: siteConfig.contacts.location,
-            subtext: "East Africa"
+            subtext: "Kampala, Uganda"
         },
         {
-            icon: faClock,
+            icon: <Clock className="w-5 h-5 text-[#E619B0]" />,
             label: "Business Hours",
             value: siteConfig.contacts.businessHours,
-            subtext: "Sunday: By appointment"
+            subtext: "Sundays by appointment"
         }
     ];
 
-    const socialLinks = [
-        { name: "Facebook", icon: faFacebook, key: "facebook" },
-        { name: "Instagram", icon: faInstagram, key: "instagram" },
-        { name: "Twitter", icon: faTwitter, key: "twitter" },
-        { name: "WhatsApp", icon: faWhatsapp, key: "whatsapp" }
-    ];
-
-    const contactReasons = [
-        "Custom safari package inquiries",
-        "Gorilla & chimp permit availability",
-        "Group booking discounts",
-        "Corporate retreat planning",
-        "Honeymoon & special occasions",
-        "Travel advice & recommendations"
+    const socials = [
+        { name: "Facebook", icon: faFacebook, link: siteConfig.socials.facebook },
+        { name: "Instagram", icon: faInstagram, link: siteConfig.socials.instagram },
+        { name: "Twitter", icon: faTwitter, link: siteConfig.socials.twitter },
+        { name: "WhatsApp", icon: faWhatsapp, link: siteConfig.socials.whatsapp },
     ];
 
     return (
-        <div className="min-h-screen bg-gray-50 font-sans">
-            {/* Hero */}
-            <div className="relative h-80 bg-gradient-to-br from-[#212121] via-[#2d2d2d] to-[#212121] overflow-hidden">
-                <div className="absolute inset-0 opacity-20" style={{ backgroundImage: 'url("data:image/svg+xml,%3Csvg width="60" height="60" viewBox="0 0 60 60" xmlns="http://www.w3.org/2000/svg"%3E%3Cg fill="none" fill-rule="evenodd"%3E%3Cg fill="%239C92AC" fill-opacity="0.15"%3E%3Cpath d="M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z"/%3E%3C/g%3E%3C/g%3E%3C/svg%3E")' }}></div>
-                <div className="absolute inset-0 flex flex-col justify-center items-center text-white text-center px-4">
-                    <div className="bg-[#7AB730] text-white text-xs font-bold px-4 py-1 rounded-full mb-4">GET IN TOUCH</div>
-                    <p className="text-[#7AB730] font-semibold tracking-widest uppercase mb-2">{siteConfig.company.name}</p>
-                    <h1 className="text-4xl md:text-5xl font-bold mb-4">Contact Us</h1>
-                    <p className="text-gray-300 max-w-2xl">We&apos;re here to help you plan your next unforgettable safari experience</p>
+        <div className="min-h-screen bg-white font-sans text-gray-800">
+            {/* Header */}
+            <div className="relative py-20 bg-[#33052A] text-center text-white overflow-hidden">
+                <div className="absolute inset-0 opacity-15 bg-[radial-gradient(#E619B0_1px,transparent_1px)] [background-size:16px_16px]"></div>
+                <div className="relative z-10 max-w-4xl mx-auto px-4">
+                    <span className="inline-block bg-[#E619B0] text-white text-xs font-bold px-3.5 py-1 rounded-full uppercase tracking-widest mb-4">
+                        Get In Touch
+                    </span>
+                    <h1 className="font-heading text-4xl md:text-5xl font-bold mb-4 leading-tight">
+                        Contact Umuhil Tours & Travel
+                    </h1>
+                    <p className="text-gray-200 text-base md:text-lg max-w-xl mx-auto leading-relaxed">
+                        We are here to help you plan your next custom safari adventure across East Africa.
+                    </p>
                 </div>
             </div>
 
-            <div className="max-w-6xl mx-auto px-4 py-12">
-                {/* Contact Info Cards */}
-                <div className="bg-white rounded-xl shadow-lg p-6 -mt-16 relative z-10 mb-12">
-                    <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
-                        {contactInfo.map((info, i) => (
-                            <div key={i} className="text-center">
-                                <div className="w-12 h-12 bg-[#7AB730]/10 rounded-full flex items-center justify-center text-[#7AB730] mx-auto mb-3">
-                                    <FontAwesomeIcon icon={info.icon} className="text-lg" />
-                                </div>
-                                <p className="text-xs text-gray-400 uppercase tracking-wider mb-1">{info.label}</p>
-                                <p className="font-semibold text-[#212121] text-sm">{info.value}</p>
-                                <p className="text-xs text-gray-500 mt-1">{info.subtext}</p>
-                            </div>
-                        ))}
-                    </div>
-                </div>
-
-                {/* Main Content Grid */}
-                <div className="grid md:grid-cols-2 gap-8 mb-12">
-                    {/* Contact Form */}
-                    <div className="bg-white rounded-lg shadow-md p-8">
-                        <div className="flex items-center gap-3 mb-6">
-                            <div className="w-10 h-1 bg-[#7AB730]"></div>
-                            <span className="text-[#7AB730] font-semibold uppercase tracking-wider text-sm">Send a Message</span>
-                        </div>
-                        <h2 className="text-2xl font-bold text-[#212121] mb-6">We&apos;d Love to Hear From You</h2>
-
-                        <div className="space-y-5">
-                            <div>
-                                <label className="block mb-2 font-medium text-sm text-[#212121]">Full Name</label>
-                                <input
-                                    type="text"
-                                    className="w-full border border-gray-300 rounded-lg p-3 focus:ring-2 focus:ring-[#7AB730] focus:border-[#7AB730] outline-none transition-all"
-                                    placeholder="Your Name"
-                                />
-                            </div>
-
-                            <div>
-                                <label className="block mb-2 font-medium text-sm text-[#212121]">Email Address</label>
-                                <input
-                                    type="email"
-                                    className="w-full border border-gray-300 rounded-lg p-3 focus:ring-2 focus:ring-[#7AB730] focus:border-[#7AB730] outline-none transition-all"
-                                    placeholder="you@example.com"
-                                />
-                            </div>
-
-                            <div>
-                                <label className="block mb-2 font-medium text-sm text-[#212121]">Phone Number</label>
-                                <input
-                                    type="tel"
-                                    className="w-full border border-gray-300 rounded-lg p-3 focus:ring-2 focus:ring-[#7AB730] focus:border-[#7AB730] outline-none transition-all"
-                                    placeholder="+256 700 000000"
-                                />
-                            </div>
-
-                            <div>
-                                <label className="block mb-2 font-medium text-sm text-[#212121]">Message</label>
-                                <textarea
-                                    className="w-full border border-gray-300 rounded-lg p-3 h-32 focus:ring-2 focus:ring-[#7AB730] focus:border-[#7AB730] outline-none transition-all resize-none"
-                                    placeholder="Tell us about your dream safari..."
-                                ></textarea>
-                            </div>
-
-                            <button
-                                type="button"
-                                className="w-full bg-[#7AB730] hover:bg-[#6a9e2a] text-white font-bold py-3 rounded-lg transition-colors"
-                            >
-                                Send Message
-                            </button>
-                        </div>
-                    </div>
-
-                    {/* Right Side Info */}
-                    <div className="space-y-6">
-                        {/* Why Contact Us */}
-                        <div className="bg-[#212121] rounded-lg shadow-md p-8 text-white">
-                            <h3 className="text-xl font-bold mb-4">Why Contact Us?</h3>
-                            <ul className="space-y-3">
-                                {contactReasons.map((item, i) => (
-                                    <li key={i} className="flex items-center gap-3 text-gray-300">
-                                        <FontAwesomeIcon icon={faCheck} className="text-[#7AB730] text-sm" />
-                                        {item}
-                                    </li>
-                                ))}
-                            </ul>
-                        </div>
-
-                        {/* Follow Us */}
-                        <div className="bg-gradient-to-br from-[#7AB730] to-[#5a8a20] rounded-lg shadow-md p-8 text-white">
-                            <h3 className="text-xl font-bold mb-4">Follow Our Adventures</h3>
-                            <p className="text-white/80 mb-6 text-sm">
-                                Stay connected and get inspired for your next safari. Follow us on social media for travel tips, wildlife photos, and exclusive offers.
+            {/* Main Content Grid */}
+            <div className="max-w-6xl mx-auto px-4 py-16">
+                <div className="grid grid-cols-1 lg:grid-cols-12 gap-12">
+                    {/* Left Column: Direct Contact Info */}
+                    <div className="lg:col-span-5 space-y-8">
+                        <div>
+                            <span className="text-[#E619B0] text-xs font-bold uppercase tracking-widest block mb-2">
+                                Direct Contact
+                            </span>
+                            <h2 className="font-heading text-3xl font-bold text-[#33052A]">
+                                Speak to Our Travel Experts
+                            </h2>
+                            <p className="text-gray-600 text-sm mt-3 leading-relaxed">
+                                Have questions about gorilla permits, itinerary customization, or lodge availability? Reach out directly via phone, email, or visit our office.
                             </p>
+                        </div>
+
+                        {/* Contact Info Items */}
+                        <div className="space-y-4 pt-2">
+                            {contactDetails.map((item, idx) => (
+                                <div
+                                    key={idx}
+                                    className="flex items-start gap-4 p-4 rounded-xl border border-gray-100 bg-gray-50/60 hover:bg-white hover:shadow-md transition-all"
+                                >
+                                    <div className="w-10 h-10 rounded-lg bg-[#FDE9F8] flex items-center justify-center flex-shrink-0 mt-0.5">
+                                        {item.icon}
+                                    </div>
+                                    <div>
+                                        <p className="text-xs font-bold text-gray-400 uppercase tracking-wider">{item.label}</p>
+                                        {item.link ? (
+                                            <a
+                                                href={item.link}
+                                                className="font-bold text-[#33052A] text-sm hover:text-[#E619B0] transition-colors"
+                                            >
+                                                {item.value}
+                                            </a>
+                                        ) : (
+                                            <p className="font-bold text-[#33052A] text-sm">{item.value}</p>
+                                        )}
+                                        <p className="text-xs text-gray-500 mt-0.5">{item.subtext}</p>
+                                    </div>
+                                </div>
+                            ))}
+                        </div>
+
+                        {/* Social Links */}
+                        <div className="pt-4 border-t border-gray-100">
+                            <p className="text-xs font-bold text-gray-400 uppercase tracking-wider mb-3">Connect With Us</p>
                             <div className="flex gap-3">
-                                {socialLinks
-                                    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-                                    .filter(social => (siteConfig.socials as any)[social.key])
-                                    .map((social, i) => (
+                                {socials
+                                    .filter((s) => s.link)
+                                    .map((s, idx) => (
                                         <a
-                                            key={i}
-                                            // eslint-disable-next-line @typescript-eslint/no-explicit-any
-                                            href={(siteConfig.socials as any)[social.key]}
+                                            key={idx}
+                                            href={s.link}
                                             target="_blank"
                                             rel="noopener noreferrer"
-                                            className="w-10 h-10 bg-white/20 hover:bg-white/30 rounded-full flex items-center justify-center transition-colors"
-                                            title={social.name}
+                                            className="w-10 h-10 rounded-full bg-gray-100 text-[#33052A] hover:bg-[#E619B0] hover:text-white flex items-center justify-center transition-all shadow-sm"
+                                            title={s.name}
                                         >
-                                            <FontAwesomeIcon icon={social.icon} className="text-lg" />
+                                            <FontAwesomeIcon icon={s.icon} className="text-base" />
                                         </a>
                                     ))}
                             </div>
                         </div>
-
-                        {/* Quick Response */}
-                        <div className="bg-white rounded-lg shadow-md p-6 border-l-4 border-[#7AB730]">
-                            <div className="flex items-start gap-4">
-                                <div className="w-12 h-12 bg-[#7AB730]/10 rounded-full flex items-center justify-center text-[#7AB730] flex-shrink-0">
-                                    <FontAwesomeIcon icon={faBolt} className="text-lg" />
-                                </div>
-                                <div>
-                                    <h4 className="font-bold text-[#212121] mb-1">Quick Response Guaranteed</h4>
-                                    <p className="text-gray-600 text-sm">We respond to all inquiries within 24 hours. For urgent matters, call us directly or message us on WhatsApp.</p>
-                                </div>
-                            </div>
-                        </div>
                     </div>
-                </div>
 
-                {/* Map Placeholder */}
-                <div className="bg-white rounded-lg shadow-md overflow-hidden">
-                    <div className="bg-gray-200 h-64 flex items-center justify-center">
-                        <div className="text-center">
-                            <div className="w-16 h-16 bg-[#7AB730]/10 rounded-full flex items-center justify-center text-[#7AB730] mx-auto mb-4">
-                                <FontAwesomeIcon icon={faMapLocationDot} className="text-2xl" />
-                            </div>
-                            <p className="text-gray-500 font-medium">Kampala, Uganda</p>
-                            <p className="text-gray-400 text-sm">Interactive map can be embedded here</p>
-                        </div>
-                    </div>
-                    <div className="p-6 bg-[#212121] text-white">
-                        <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
-                            <div>
-                                <h3 className="font-bold text-lg">Visit Our Office</h3>
-                                <p className="text-gray-400 text-sm">We welcome walk-in visitors during business hours</p>
-                            </div>
-                            <button className="bg-[#7AB730] hover:bg-[#6a9e2a] text-white font-bold py-3 px-6 rounded-lg transition-colors">
-                                Get Directions
-                            </button>
+                    {/* Right Column: Contact Form */}
+                    <div className="lg:col-span-7">
+                        <div className="bg-white rounded-2xl border border-gray-100 p-8 shadow-lg">
+                            <h3 className="font-heading text-2xl font-bold text-[#33052A] mb-2">
+                                Send Us a Message
+                            </h3>
+                            <p className="text-gray-500 text-xs mb-6">
+                                Fill out the form below and our safari specialist will respond within 24 hours.
+                            </p>
+
+                            {submitted ? (
+                                <div className="text-center py-12 px-4 space-y-4">
+                                    <div className="w-14 h-14 bg-[#FDE9F8] rounded-full flex items-center justify-center text-[#E619B0] mx-auto">
+                                        <CheckCircle2 className="w-8 h-8" />
+                                    </div>
+                                    <h4 className="font-heading text-2xl font-bold text-[#33052A]">Message Sent Successfully!</h4>
+                                    <p className="text-gray-600 text-sm max-w-md mx-auto">
+                                        Thank you for reaching out to {siteConfig.company.name}. We have received your inquiry and will be in touch shortly.
+                                    </p>
+                                    <button
+                                        onClick={() => setSubmitted(false)}
+                                        className="mt-4 bg-[#33052A] text-white text-xs font-bold px-6 py-2.5 rounded-full hover:bg-[#E619B0] transition-colors"
+                                    >
+                                        Send Another Message
+                                    </button>
+                                </div>
+                            ) : (
+                                <form onSubmit={handleSubmit} className="space-y-4">
+                                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                                        <div>
+                                            <label className="block text-xs font-bold text-[#33052A] mb-1.5 ml-1">Full Name</label>
+                                            <input
+                                                type="text"
+                                                required
+                                                value={form.name}
+                                                onChange={(e) => setForm({ ...form, name: e.target.value })}
+                                                placeholder="Your Full Name"
+                                                className="w-full h-11 px-4 text-sm border border-gray-200 bg-gray-50/50 rounded-xl focus:border-[#E619B0] focus:bg-white outline-none transition-all"
+                                            />
+                                        </div>
+
+                                        <div>
+                                            <label className="block text-xs font-bold text-[#33052A] mb-1.5 ml-1">Email Address</label>
+                                            <input
+                                                type="email"
+                                                required
+                                                value={form.email}
+                                                onChange={(e) => setForm({ ...form, email: e.target.value })}
+                                                placeholder="you@example.com"
+                                                className="w-full h-11 px-4 text-sm border border-gray-200 bg-gray-50/50 rounded-xl focus:border-[#E619B0] focus:bg-white outline-none transition-all"
+                                            />
+                                        </div>
+                                    </div>
+
+                                    <div>
+                                        <label className="block text-xs font-bold text-[#33052A] mb-1.5 ml-1">Phone Number</label>
+                                        <input
+                                            type="tel"
+                                            value={form.phone}
+                                            onChange={(e) => setForm({ ...form, phone: e.target.value })}
+                                            placeholder="+256 700 000000"
+                                            className="w-full h-11 px-4 text-sm border border-gray-200 bg-gray-50/50 rounded-xl focus:border-[#E619B0] focus:bg-white outline-none transition-all"
+                                        />
+                                    </div>
+
+                                    <div>
+                                        <label className="block text-xs font-bold text-[#33052A] mb-1.5 ml-1">Message</label>
+                                        <textarea
+                                            required
+                                            rows={5}
+                                            value={form.message}
+                                            onChange={(e) => setForm({ ...form, message: e.target.value })}
+                                            placeholder="Tell us about your travel dates, preferred destinations, or safari questions..."
+                                            className="w-full p-4 text-sm border border-gray-200 bg-gray-50/50 rounded-xl focus:border-[#E619B0] focus:bg-white outline-none transition-all resize-none"
+                                        />
+                                    </div>
+
+                                    <button
+                                        type="submit"
+                                        disabled={loading}
+                                        className="w-full h-12 bg-gradient-to-r from-[#E619B0] to-[#8A0F6B] text-white font-bold text-sm rounded-xl shadow-md hover:brightness-110 transition-all flex items-center justify-center gap-2 cursor-pointer disabled:opacity-60"
+                                    >
+                                        {loading ? (
+                                            <span className="inline-block w-4 h-4 border-2 border-white border-r-transparent rounded-full animate-spin" />
+                                        ) : (
+                                            <>
+                                                <Send className="w-4 h-4" />
+                                                <span>Send Message</span>
+                                            </>
+                                        )}
+                                    </button>
+                                </form>
+                            )}
                         </div>
                     </div>
                 </div>

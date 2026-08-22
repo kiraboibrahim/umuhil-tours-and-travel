@@ -1,1 +1,40 @@
 @import "tailwindcss";
+
+@theme {
+  --font-sans: var(--font-sans), "Plus Jakarta Sans", system-ui, sans-serif;
+  --font-heading: var(--font-heading), "Playfair Display", Georgia, serif;
+
+  --color-umuhil-50: #FDE9F8;
+  --color-umuhil-100: #FBCCF0;
+  --color-umuhil-200: #F79EE0;
+  --color-umuhil-300: #F566CE;
+  --color-umuhil-400: #F033D6;
+  --color-umuhil-500: #E619B0;
+  --color-umuhil-600: #C11292;
+  --color-umuhil-700: #8A0F6B;
+  --color-umuhil-800: #6B0A52;
+  --color-umuhil-900: #4D0838;
+  --color-umuhil-950: #33052A;
+
+  --color-brand-primary: #E619B0;
+  --color-brand-hover: #C11292;
+  --color-brand-dark: #33052A;
+  --color-brand-light: #FDE9F8;
+}
+
+@layer utilities {
+  .font-heading {
+    font-family: var(--font-heading), Georgia, serif;
+  }
+  .font-sans {
+    font-family: var(--font-sans), system-ui, sans-serif;
+  }
+  .bg-umuhil-gradient {
+    background-image: linear-gradient(135deg, #F033D6 0%, #E619B0 40%, #6B0A52 80%, #4D0838 100%);
+  }
+  .text-umuhil-gradient {
+    background-image: linear-gradient(180deg, #F033D6 0%, #8A0F6B 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+}

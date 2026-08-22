@@ -1,51 +1,15 @@
+"use client";
+
 import React from "react";
 import Image from "next/image";
 import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
-import { Slide } from "@/models/Slide";
 import Link from "next/link";
-import siteConfig from "@/app/siteConfig";
-
-export const slides: Slide[] = [
-    {
-        id: 2,
-        img: "/img/carousel-2.jpeg",
-        title: "Hotel Reservations",
-        description: "Relax in top-notch hotels as you enjoy breathtaking sunsets and delicious local cuisine along Lake Victoria or in Kampala.",
-        link: "#special-offer",
-    },
-    {
-        id: 3,
-        img: "/img/antelope.jpeg",
-        title: "Wildlife Safaris",
-        description: "Discover Uganda's remarkable wildlife on thoughtfully planned safari experiences.",
-        link: "#special-offer",
-    },
-    {
-        id: 4,
-        img: "/img/elephant-crowd.jpeg",
-        title: "Big Game Encounters",
-        description: "Witness magnificent elephants and other iconic wildlife in their natural habitat.",
-        link: "#special-offer",
-    },
-    {
-        id: 5,
-        img: "/img/packages/chimpanzee-kibale-park.jpg",
-        title: "Chimpanzee Tracking",
-        description: "Explore Kibale's lush forests with memorable primate-tracking adventures.",
-        link: "#special-offer",
-    },
-    {
-        id: 6,
-        img: "/img/packages/gorilla-trekking.jpg",
-        title: "Gorilla Trekking",
-        description: "Experience the wonder of meeting mountain gorillas in Uganda's wild landscapes.",
-        link: "#special-offer",
-    },
-];
+import siteContent from "@/config/siteContent";
 
 const Carousel: React.FC = () => {
+    const slides = siteContent.heroSlides;
 
     const settings = {
         dots: true,
@@ -62,55 +26,52 @@ const Carousel: React.FC = () => {
     };
 
     return (
-        <div className="w-full p-0">
+        <div className="w-full p-0 relative">
             <Slider {...settings}>
                 {slides.map((slide) => (
-                    <div key={slide.id} className="relative h-[600px]">
+                    <div key={slide.id} className="relative h-[550px] lg:h-[620px]">
                         <Image
                             src={slide.img}
                             alt={slide.title}
                             fill
+                            priority={slide.id === 1}
                             sizes="100vw"
                             unoptimized
                             className="object-cover"
                         />
-                        {/* Gradient overlay for better text readability */}
+                        {/* Dark Gradient Overlay */}
                         <div
-                            className="absolute top-0 left-0 right-0 bottom-0 z-[1]"
+                            className="absolute inset-0 z-[1]"
                             style={{
-                                background: 'linear-gradient(to bottom, rgba(0,0,0,0.3), rgba(0,0,0,0.6))'
+                                background: "linear-gradient(to bottom, rgba(51,5,42,0.45) 0%, rgba(0,0,0,0.75) 100%)"
                             }}
                         />
-                        <div
-                            className="absolute top-0 left-0 right-0 bottom-0 flex flex-col items-center justify-center z-[2]"
-                        >
-                            <div className="p-3 max-w-[900px]">
+                        <div className="absolute inset-0 flex flex-col items-center justify-center z-[2] pb-12 px-4">
+                            <div className="p-3 max-w-[900px] text-center">
                                 <h4
-                                    className="text-white uppercase mb-0 md:mb-3 text-lg"
+                                    className="text-[#F566CE] uppercase font-bold tracking-[4px] mb-2 text-xs md:text-sm"
                                     style={{
-                                        letterSpacing: '3px',
-                                        textShadow: '2px 2px 4px rgba(0,0,0,0.8)'
+                                        textShadow: "0 2px 4px rgba(0,0,0,0.8)"
                                     }}
                                 >
-                                    {siteConfig.company.name} - Uganda
+                                    {slide.subtitle}
                                 </h4>
                                 <h1
-                                    className="text-[3.5rem] max-[1200px]:text-[calc(1.475rem_+_2.7vw)] font-light leading-[1.2] text-white mb-0 md:mb-4"
+                                    className="font-heading text-[2.8rem] md:text-[3.8rem] font-extrabold leading-[1.12] text-white mb-4 md:mb-5 max-w-4xl mx-auto"
                                     style={{
-                                        textShadow: '3px 3px 6px rgba(0,0,0,0.8)',
-                                        fontWeight: 'bold'
+                                        textShadow: "3px 3px 6px rgba(0,0,0,0.8)"
                                     }}
                                 >
                                     {slide.title}
                                 </h1>
+                                <p className="text-white/90 text-sm md:text-lg mb-6 max-w-2xl mx-auto drop-shadow font-medium leading-relaxed">
+                                    {slide.description}
+                                </p>
                                 <Link
-                                    href={slide.link || "#special-offer"}
-                                    className="inline-block font-normal text-center align-middle select-none bg-[#7AB730] border border-[#7AB730] text-white py-[0.375rem] px-[0.75rem] md:py-3 md:px-5 text-base leading-[1.5] mt-2 no-underline hover:bg-[#669928] hover:border-[#5f8f25] hover:text-white transition-[color_0.15s_ease-in-out,background-color_0.15s_ease-in-out,border-color_0.15s_ease-in-out,box-shadow_0.15s_ease-in-out]"
-                                    style={{
-                                        boxShadow: '0 4px 15px rgba(0,0,0,0.3)'
-                                    }}
+                                    href={slide.ctaLink}
+                                    className="inline-block font-bold text-white bg-gradient-to-r from-[#E619B0] to-[#8A0F6B] hover:from-[#C11292] hover:to-[#6B0A52] py-3.5 px-8 text-sm md:text-base rounded-full no-underline transition-all shadow-xl hover:scale-105"
                                 >
-                                    Book Now
+                                    {slide.ctaText}
                                 </Link>
                             </div>
                         </div>
@@ -134,15 +95,15 @@ const CarouselArrow: React.FC<ArrowProps> = ({ direction, onClick }) => {
             type="button"
             aria-label={`${isPrevious ? "Previous" : "Next"} slide`}
             onClick={onClick}
-            className={`absolute top-1/2 z-10 flex h-20 w-20 -translate-y-1/2 items-center justify-center rounded-full bg-transparent text-6xl font-light leading-none text-white transition-all duration-200 hover:scale-110 hover:bg-[#212121]/80 focus:outline-none focus:ring-0 ${isPrevious ? "left-5" : "right-5"}`}
+            className={`absolute top-1/2 z-10 flex h-12 w-12 -translate-y-1/2 items-center justify-center rounded-full bg-[#33052A]/40 text-white transition-all duration-200 hover:scale-110 hover:bg-[#E619B0] focus:outline-none ${isPrevious ? "left-4" : "right-4"}`}
         >
             <svg
                 viewBox="0 0 24 24"
                 aria-hidden="true"
-                className="h-11 w-11"
+                className="h-6 w-6"
                 fill="none"
                 stroke="currentColor"
-                strokeWidth="3.5"
+                strokeWidth="2.5"
                 strokeLinecap="round"
                 strokeLinejoin="round"
             >

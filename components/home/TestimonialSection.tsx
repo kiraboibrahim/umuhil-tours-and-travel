@@ -1,145 +1,43 @@
-import Image from "next/image";
-import Slider from "react-slick";
-import "slick-carousel/slick/slick.css";
-import "slick-carousel/slick/slick-theme.css";
-import { Testimonial } from "@/models/Testimonial";
+"use client";
 
-const testimonials: Testimonial[] = [
-    {
-        id: 1,
-        name: "Sarah Nakato",
-        profession: "Adventure Traveler",
-        image: "/img/testimonial-1.jpg",
-        text: "The gorilla trekking in Bwindi was a once-in-a-lifetime experience. The guides were knowledgeable and very friendly!",
-    },
-    {
-        id: 2,
-        name: "David Okello",
-        profession: "Safari Enthusiast",
-        image: "/img/testimonial-2.jpg",
-        text: "Queen Elizabeth National Park safari exceeded my expectations. We saw lions, elephants, and even hippos in the wild!",
-    },
-    {
-        id: 3,
-        name: "Grace Achieng",
-        profession: "Cultural Explorer",
-        image: "/img/testimonial-3.jpg",
-        text: "Visiting the Ssese Islands was amazing. The beaches are pristine and the local community is welcoming and kind.",
-    },
-    {
-        id: 4,
-        name: "Michael Kato",
-        profession: "Nature Lover",
-        image: "/img/testimonial-4.jpg",
-        text: "The Rwenzori Mountains hike was challenging but incredibly rewarding. Stunning scenery all the way!",
-    },
-    {
-        id: 5,
-        name: "Esther Namutebi",
-        profession: "Photographer",
-        image: "/img/testimonial-5.jpg",
-        text: "Jinja and the Nile adventure sports were thrilling. Kayaking and bungee jumping made it unforgettable.",
-    },
-    {
-        id: 6,
-        name: "Joseph Lutaaya",
-        profession: "Explorer",
-        image: "/img/testimonial-6.jpg",
-        text: "Kibale Forest chimpanzee tracking was amazing. The guides ensured we had a safe and educational experience.",
-    },
-];
+import siteContent from "@/config/siteContent";
 
-const settings = {
-    dots: true,
-    infinite: true,
-    speed: 500,
-    slidesToShow: 3,
-    slidesToScroll: 1,
-    autoplay: true,
-    autoplaySpeed: 3000,
-    pauseOnHover: true,
-    responsive: [
-        { breakpoint: 992, settings: { slidesToShow: 2 } },
-        { breakpoint: 576, settings: { slidesToShow: 1 } },
-    ],
-};
+const TestimonialSection = () => {
+    const testimonials = siteContent.testimonials;
 
-const TestimonialSection = () => (
-    <div className="w-full py-12" id="testimonials">
-        <div className="max-w-[1140px] mx-auto px-4 py-12 text-center">
-            <h6 className="text-[#7AB730] uppercase tracking-[5px] font-medium text-base mb-2">
-                Testimonial
-            </h6>
-            <h1 className="text-[2.5rem] font-bold leading-[1.2] text-[#212121] mb-0">
-                What Our Clients Say
-            </h1>
+    return (
+        <div className="w-full py-12 bg-gray-50/50" id="testimonials">
+            <div className="max-w-[1140px] mx-auto px-4 py-8 text-center">
+                <h6 className="text-[#E619B0] uppercase tracking-[4px] font-bold text-sm mb-2">
+                    Testimonials
+                </h6>
+                <h1 className="font-heading text-[2.5rem] font-extrabold leading-[1.2] text-[#33052A] mb-8">
+                    What Our Travelers Say
+                </h1>
 
-            <div className="mt-8">
-                <Slider {...settings}>
+                <div className="grid grid-cols-1 md:grid-cols-3 gap-6 text-left">
                     {testimonials.map((t) => (
-                        <div key={t.id} className="px-2">
-                            <div className="text-center pb-8">
-                                <Image
-                                    width={80}
-                                    height={80}
-                                    className="mx-auto rounded-full"
+                        <div key={t.id} className="bg-white p-6 rounded-2xl border border-gray-100 shadow-sm flex flex-col justify-between">
+                            <p className="text-gray-600 text-sm leading-relaxed mb-6 italic">
+                                &quot;{t.text}&quot;
+                            </p>
+                            <div className="flex items-center gap-3.5 pt-4 border-t border-gray-100">
+                                <img
                                     src={t.image}
                                     alt={t.name}
+                                    className="w-11 h-11 rounded-full object-cover border-2 border-[#E619B0]"
                                 />
-                                <div
-                                    className="bg-white p-4 mt-4 shadow-[0_0_30px_#CCCCCC] transition-shadow duration-500 min-h-[130px] flex flex-col justify-center"
-                                >
-                                    <p className="mb-2 text-[0.9rem] text-[#656565] leading-[1.5]">
-                                        {t.text}
-                                    </p>
-                                    <h5 className="truncate mb-0 text-xl font-medium text-[#212121] mt-2">
-                                        {t.name}
-                                    </h5>
-                                    <span className="text-[0.8rem] text-[#656565]">
-                                        {t.profession}
-                                    </span>
+                                <div>
+                                    <h5 className="font-bold text-[#33052A] text-sm">{t.name}</h5>
+                                    <p className="text-xs text-[#E619B0] font-medium">{t.profession}</p>
                                 </div>
                             </div>
                         </div>
                     ))}
-                </Slider>
+                </div>
             </div>
         </div>
-
-        <style jsx global>{`
-            /* Testimonial carousel custom styles */
-            .slick-dots {
-                margin-top: 1.25rem;
-                text-align: center;
-            }
-            
-            .slick-dots li button:before {
-                position: relative;
-                display: inline-block;
-                width: 20px;
-                height: 20px;
-                background: #DDDDDD;
-                border-radius: 0;
-                content: '';
-                transition: all 0.5s;
-                opacity: 1;
-            }
-            
-            .slick-dots li.slick-active button:before {
-                width: 40px;
-                background: #7AB730;
-            }
-            
-            .slick-slide > div > div > div {
-                transition: box-shadow 0.5s;
-            }
-            
-            .slick-center .testimonial-text,
-            .slick-current .testimonial-text {
-                box-shadow: 0 0 30px #CCCCCC;
-            }
-        `}</style>
-    </div>
-);
+    );
+};
 
 export default TestimonialSection;
