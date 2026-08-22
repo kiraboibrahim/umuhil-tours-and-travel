@@ -5,7 +5,8 @@ const siteConfig = {
         logo: "/img/logo.png",
     },
     contacts: {
-        phoneNumber: "WhatsApp: 0780753938 | Call: 0743369906",
+        whatsappNumber: "0780753938",
+        phoneNumber: "0743369906",
         email: "Umuhillimited@gmail.com",
         location: "Plot 8, Burton Street, Apponye Mall, Kampala, Uganda",
         businessHours: "Mon - Fri: 08:00 am to 5:30 pm, Sat: 9:00 am - 3:00 pm"

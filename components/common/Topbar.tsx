@@ -1,6 +1,6 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faEnvelope, faPhoneAlt, faClock } from "@fortawesome/free-solid-svg-icons";
-import { faFacebookF, faTwitter, faLinkedinIn, faInstagram, faYoutube } from "@fortawesome/free-brands-svg-icons";
+import { faFacebookF, faTwitter, faLinkedinIn, faInstagram, faYoutube, faWhatsapp } from "@fortawesome/free-brands-svg-icons";
 import Link from "next/link";
 import siteConfig from "@/app/siteConfig";
 
@@ -8,7 +8,7 @@ const Topbar = () => (
     <div className="w-full bg-[#33052A] text-white/90 py-2.5 px-4 hidden lg:block border-b border-white/10 text-xs font-medium">
         <div className="max-w-[1140px] mx-auto flex items-center justify-between">
             {/* Contact Info */}
-            <div className="flex items-center space-x-6">
+            <div className="flex items-center space-x-5">
                 <a 
                     href={`mailto:${siteConfig.contacts.email}`} 
                     className="flex items-center space-x-2 text-white/80 hover:text-[#F566CE] transition-colors"
@@ -18,11 +18,21 @@ const Topbar = () => (
                 </a>
                 <span className="text-white/20">|</span>
                 <a 
+                    href={`https://wa.me/256${siteConfig.contacts.whatsappNumber.replace(/^0/, '')}`} 
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="flex items-center space-x-2 text-white/80 hover:text-[#F566CE] transition-colors"
+                >
+                    <FontAwesomeIcon icon={faWhatsapp} className="text-[#F033D6] text-sm" />
+                    <span>WhatsApp: {siteConfig.contacts.whatsappNumber}</span>
+                </a>
+                <span className="text-white/20">|</span>
+                <a 
                     href={`tel:${siteConfig.contacts.phoneNumber.replace(/[^0-9+]/g, '')}`} 
                     className="flex items-center space-x-2 text-white/80 hover:text-[#F566CE] transition-colors"
                 >
                     <FontAwesomeIcon icon={faPhoneAlt} className="text-[#F033D6]" />
-                    <span>{siteConfig.contacts.phoneNumber}</span>
+                    <span>Call: {siteConfig.contacts.phoneNumber}</span>
                 </a>
                 <span className="text-white/20">|</span>
                 <div className="flex items-center space-x-2 text-white/70">
